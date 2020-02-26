@@ -8,11 +8,11 @@ This animation shows the **"Confirmed"**, **"Discharged"** and **"Active"** COVI
 
  1. Clone / download this repository into a directory.
  
- 2. Open a terminal and go to the same directory of step 1 and type:
+ 2. Open a terminal and go to the same directory as used in step 1 and type:
 
     `$ python3.6 covid19_case_management.py`
 
-The program will generate a `.gif` animation file according to the confirmed and discharged case histories given in the files `Cases_Confirmed.txt`  and `Cases_Discharged.txt`. 
+The program will generate a `.gif` animation file of the confirmed and discharged case histories given in the files `Cases_Confirmed.txt`  and `Cases_Discharged.txt`. 
 
 ### Remarks
 
