@@ -12,7 +12,7 @@ This animation shows the **"Confirmed"**, **"Discharged"** and **"Active"** COVI
 
     `$ python3.6 covid19_case_management.py`
 
-The program will generate a `.gif` animation file of the confirmed and discharged case histories given in the files `Cases_Confirmed.txt`  and `Cases_Discharged.txt`. 
+The program will generate a `.gif` animation file of the confirmed and discharged case histories given in the files `Cases_Confirmed.txt`  and `Cases_Discharged.txt`. You have to update these files to create an updated `.gif` animation. 
 
 ### Remarks
 
