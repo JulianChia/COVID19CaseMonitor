@@ -1,3 +1,12 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+'''
+Program to monitor COVID-19 "Confirmed", "Discharged" & "Active" Case Histories,
+
+Required Files:
+  ./Cases_Confirmed.txt    it store --> case no.  ,  dd/mm/yyyy
+  ./Cases_Discharged.txt   it store --> dd/mm/yyyy,  case nos.
+'''
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as ticker
@@ -21,7 +30,6 @@ def read_data( source ):
     '''Function to read in data from .txt file, "source" must be a pathlib.Path object.'''
     with source.open() as f:
       lines = f.readlines()
-    #print( lines )
     return lines
 
 
@@ -70,7 +78,6 @@ def reformat_discharged_case_data( indata, source ):
             else:
                 print( f'\n    WARNING!!! Missing case number in file "{source}" at line {line}. This data is excluded.\n' )
                 
-    #print( f'\noutdata = {outdata}' )
     return outdata, case_list
 
 
@@ -87,11 +94,6 @@ def get_time_axis( data1, data2 ):
     delta = timedelta(days=1)
     time_axis_md = mdates.drange( dstart, dend, delta )
     time_axis_py = mdates.num2date( time_axis_md, tz=None )
-    #print( f'\ndstart = {type(dstart)} = {dstart}')
-    #print( f'\ndend   = {type(dend)} = {dend}')
-    #print( f'\ndelta  = {type(delta)} = {delta}\n')
-    #print( f'\ntime_axis_md = {type(time_axis_md)}= {time_axis_md}' )
-    #print( f'\ntime_axis_py = {type(time_axis_py)}= {time_axis_py}' )
     return time_axis_py
 
 
@@ -115,7 +117,6 @@ def get_discharged_cases( time_axis, data ):
     for date, case in list(data.items()):
         date = datetime.strptime(date, "%Y-%m-%d").strftime('%b-%d')
         dhistory[date] = case
-    #print( f'\ndhistory = {dhistory}')
     return dhistory
 
 
@@ -132,20 +133,15 @@ discharged_data = read_data( source2 )
 #### PROCESS DATA ####
 ######################
 confirmed_data = reformat_confirmed_case_data( confirmed_data, source1 )
-#print(f'\nconfirmed_data = {confirmed_data}')
 
 discharged_data, discharged_case_num = reformat_discharged_case_data( discharged_data, source2 )
-#print(f'\ndischarged_data = {discharged_data}')
-#print(f'\nnums = {nums}')
 
 time_axis = get_time_axis( confirmed_data, discharged_data )
                                                           
 ccase_history = get_confirmed_cases( time_axis, confirmed_data )
 max_daily_confirmed_cases = round_up_to_even( max( [len(i) for i in ccase_history.values()] ) )
-print( f'\nccase_history = {ccase_history}')
 
 dcase_history  = get_discharged_cases( time_axis, discharged_data )
-print( f'\ndcase_history = {dcase_history}')
 max_daily_discharged_cases = -max( [len(i) for i in dcase_history.values()] )
 
 ######################
@@ -173,26 +169,16 @@ ax.grid( linestyle=':',)
 clabels=list( ccase_history.values() )  # For annotation 
 cyy = [ len(i) for i in clabels ]       # y-axis
 cxx = list( ccase_history.keys() )      # x-axis
-#print( f'\nclabels = {clabels} {len(clabels)}')
-#print( f'\ncyy = {cyy} {len(cyy)}')
-#print( f'\ncxx = {cxx} {len(cxx)}')
 
 dlabels=list( dcase_history.values() ) # For annotation 
-dyy = [ -len(i) for i in dlabels ]        # y-axis
+dyy = [ -len(i) for i in dlabels ]     # y-axis
 dxx = list( dcase_history.keys() )     # x-axis
-#print( f'\ndlabels = {dlabels} {len(dlabels)}')
-#print( f'\ndyy = {dyy} {len(dyy)}')
-#print( f'\ndxx = {dxx} {len(dxx)}')
 
 # Initialise stem plot parameters
 cyyo = [ 0 for i in cyy ]
 dyyo = [ 0 for i in dyy ]
 clabelso = [ [] for i in clabels ]
 dlabelso = [ [] for i in dlabels ]
-#print( f'\ncyyo = {cyyo} {len(cyyo)}')
-#print( f'dyyo = {dyyo} {len(dyyo)}')
-#print( f'clabelso = {clabelso} {len(clabelso)}')
-#print( f'dlabelso = {dlabelso} {len(dlabelso)}')
 
 # Draw Confirmed cases stem plot
 cmarkerline, cstemline, cbaseline = ax.stem(
@@ -210,15 +196,13 @@ plt.setp(dstemline, color="#00FF00" )
 plt.legend( loc='upper left' )
 
 # Draw Authors
-textstr = 'Created by Samuel Chia & Julian Chia, Copyright Feb-2020'
-# these are matplotlib.patch.Patch properties
+textstr = 'Created by Samuel Chia & Julian Chia, February 2020.'
 props = dict( boxstyle='round', facecolor='wheat', edgecolor='wheat', alpha=0.5)
-# place a text box in upper left in axes coords
 author = ax.text( 0.05, 0.045, textstr, transform=ax.transAxes, fontsize=10,
                   va='center', ha='left', bbox=props )
 
 # Draw Summary above Authors
-sbody = f'Total Confirmed:        \nTotal Discharged: \nConfirmed(active):'
+sbody = f'Confirmed:      \nDischarged: \nActive:'
 sbprops = dict( boxstyle='sawtooth,pad=0.5', fc='#FF6F61', ec='#FF6F61', alpha=0.8)
 summary_body= ax.text( 0.052, 0.2, sbody, transform=ax.transAxes,
                        fontsize=12, weight='bold', color='white',
@@ -249,7 +233,7 @@ def get_annotation_values_for_frame( frame, source ):
      
 
 def update(frame, timeline, cyy, dyy, clabels, dlabels, ann_list, stem_list, summary_body):
-    print( f'\nFRAME: {frame}')
+    print( f'\nProcess Frame:{frame}')
     #Remove previous frame stem plot lines and annotations
     for i in stem_list:
         for j in i:
@@ -306,7 +290,7 @@ def update(frame, timeline, cyy, dyy, clabels, dlabels, ann_list, stem_list, sum
     plt.setp( dstemline, color=color_d )
     stem_list.append( (cmarkerline, cstemline, cbaseline, dmarkerline, dstemline, dbaseline) )
 
-    # Draw Annotations    
+    # Annotate Confirmed Cases    
     for i, cases in enumerate(clabs):
         count=1
         for case in cases:
@@ -323,7 +307,7 @@ def update(frame, timeline, cyy, dyy, clabels, dlabels, ann_list, stem_list, sum
             ann_list.append(ann)
             count += 1
 
-    # Discharged cases
+    # Annotate Discharged Cases
     for i, cases in enumerate(dlabs):
         count=1
         for case in cases:
@@ -335,7 +319,7 @@ def update(frame, timeline, cyy, dyy, clabels, dlabels, ann_list, stem_list, sum
             count += 1
 
     # Update Summary
-    sbody = f'Total Confirmed:    {len(ccase_nums)}\nTotal Discharged:   {len(dcase_nums)}\nConfirmed(active): {netcase} '
+    sbody = f'Confirmed:   {len(ccase_nums)}\nDischarged:  {len(dcase_nums)}\nActive:          {netcase} '
     summary_body.set_text(sbody)
 
 
@@ -343,15 +327,12 @@ ann_list = []
 stem_list = []
 a = max(time_axis)
 filename = f'covid19_{str(a.year)}_{str(a.month)}_{str(a.day)}.gif'
-print( filename )
-
 ani = animation.FuncAnimation(
     fig, update, fargs=(cxx, cyy, dyy, clabels, dlabels, ann_list, stem_list, summary_body),
     frames=range(0, len(cxx), 1), interval=1000, repeat=False, repeat_delay=10000,
-    #frames=range(29, 34, 1), interval=500, repeat=False, repeat_delay=500,
-    #blit=True, 
-    save_count=500)
-#ani.save( filename, dpi=80, writer='imagemagick' )
+    )
+ani.save( filename, dpi=80, writer='imagemagick' )
+print( f'\nCreated {Path.cwd()}/{filename}.')
 plt.show()
 
 
