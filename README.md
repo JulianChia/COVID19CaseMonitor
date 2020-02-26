@@ -2,7 +2,7 @@
 
 ![covid19_2020_2_25](./covid19_2020_2_25.gif)
 
-This animation shows the **"Confirmed"**, **"Discharged"** and **"Active"** COVID-19 cases in Singapore, as of 25th February 2020. It was created using the program `covid19_case_management.py`, which is written using [Python 3.6](https://www.python.org/) & [Mathplotlib 3.1.3](https://matplotlib.org/3.1.0/index.html).
+This animation shows the **"Confirmed"**, **"Discharged"** and **"Active"** COVID-19 cases in Singapore, as of 25th February 2020. It was created using the program `covid19_case_monitor.py`, which is written using [Python 3.6](https://www.python.org/) & [Mathplotlib 3.1.3](https://matplotlib.org/3.1.0/index.html).
 
 ### Execution
 
