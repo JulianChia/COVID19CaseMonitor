@@ -16,7 +16,7 @@ The program will generate a `.gif` animation file of the confirmed and discharge
 
 ### Remarks
 
-- We hope this program can help the current efforts in monitoring and understanding the COVID-19 epidemic.
+- We hope this program can help the current efforts in understanding and combatting the COVID-19 epidemic.
 - Singapore's "Active" COVID-19 cases appears to be declining. We pray this trend continues. 
 
 ### Authors
